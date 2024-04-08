@@ -65,10 +65,10 @@ fn test_advent() {
             let split_char: String = String::from("\n");
             let lines: Vec<String> = data.split(split_char.as_str()).map(|x| x.to_string()).collect();
             let mut index: usize = 0usize;
-            
+
             'coords: for i in 0..lines.len() {
                 index = i;
-                
+
                 let line: String = lines[index].clone();
                 let size: usize = line.len();
                 if size == 0 || size == 1 { break 'coords; }
@@ -82,7 +82,7 @@ fn test_advent() {
             'folds: for i in index+1..lines.len() {
                 let line: String = lines[i].clone();
                 let size: usize = line.len();
-                
+
                 if size == 0 { break 'folds; }
                 if size == 1 { continue 'folds; }
 
@@ -131,7 +131,7 @@ fn test_advent() {
             }
 
             let mut buffer: Vec<Vec<char>> = vec![vec![' '; mx]; my];
-            
+
             for coord in coords {
                 let (x,y) = (coord.0,coord.1);
 
@@ -159,7 +159,9 @@ fn test_advent() {
     let result = print_dots(&coords);
 
     let file_data = std::fs::read("tests/origami-output.txt").unwrap();
-    let string_data = std::str::from_utf8(file_data.as_slice()).unwrap().trim_end();
+    let string_data = std::str::from_utf8(file_data.as_slice())
+        .unwrap()
+        .trim_end();
 
     assert_eq!(string_data, result);
 }
@@ -176,4 +178,11 @@ fn test_string() {
     let string = String::from(goldberg_string!("This is an encrypted string!"));
 
     assert_eq!(string, "This is an encrypted string!");
+}
+
+#[test]
+fn test_include_str() {
+    let string = String::from(goldberg_include_str!("tests/origami-input.txt"));
+
+    assert_eq!(string, include_str!("origami-input.txt"));
 }
